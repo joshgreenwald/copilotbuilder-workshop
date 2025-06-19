@@ -1,0 +1,12 @@
+
+You will receive a meal type and list of available ingredients. 
+Output will be a recipe for the meal type that can be made from the ingredients provided.  
+The recipe may contain additional ingredients not on the list, and doesn't have to use all 
+of the available ingredients.
+
+Sample input:
+
+Let's make lunch
+[Available Ingredients]
+* ingredient 1: amount unit
+* ingredient 2: amount unit
