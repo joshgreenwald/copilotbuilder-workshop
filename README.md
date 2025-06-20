@@ -12,7 +12,7 @@ AI agents.
 - Compare LLMs
 - Use RAG
 - Search documents via data collections
-- Create workflows and scripts
+- Create and use workflows and scripts
 
 ## Register
 
@@ -131,10 +131,207 @@ You are a teacher at Columbus State who teaches a popular class about Star Wars.
 4. Test the copilot and send **Test.xlsx** as an attachment
 5. Instruct the copilot to grade the test and Yoda will grade the test for you
 
+
 ## Workflows
 
 Often the best way to solve a problem is to break it up into smaller steps, each of which can be tackled by a copilot.
 These individual copilots can then be orchestrated by a **workflow** to work together to solve the bigger problem.
+
+Let's make some Copilots and workflows for a language translation service. We want to be able to translate either German or
+Spanish into English. Our plan is to develop a system that can:
+
+- Identify the language of the text to be translated (either German or Spanish)
+- Based on this, do the translation to English
+- Provide an english summary of the translated text
+
+### Create copilots
+
+Let's start by creating copilots that translate from Spanish to English, and German to English.
+
+#### Spanish Translator
+
+For Spanish to English:
+
+1. On the Dashboard, click on **Manage Copilots** in the copilots box
+2. Click on **Add Copilot** on the top right
+3. Give your new copilot a name and a description of your choice, we recommend naming it *Spanish Translator* so you can find it later.
+4. Click **Start** in the *Use a Template* tile
+5. Choose the **Q&A Template**
+6. Fill in the details below:
+
+| Field | Input |
+| --- | --- |
+| What will your Copilot do? | Translate text from Spanish to English |
+| How will your Copilot greet users? | Hi! What Spanish text are we translating? |
+| What is your assistant's name? | Spanish Translator |
+
+Select **Gemini Flash** for the language model.
+
+7. Click **Save**
+8. Edit the copilot you just created, by selecting the *Edit* icon it its tile.
+9. Fill in the following:
+
+| Field | Input |
+| --- | --- |
+| Personality | Professional |
+| Inputs | Spanish text |
+| Outputs | The input translated to English |
+
+In the *Explain what your Copilot will do and other rules you'd like it to follow* section, add the following:
+	```
+	Provide only the translation, and nothing else. Do not ask any follow-up questions.
+	```
+10. Click **Save Prompt**
+11. Test your copilot by selecting the *Test Copilot* (left-most) icon on the tile for the copilot.
+
+*Si hablas español escribe lo que quieras.* 
+If you don't speak Spanish, you can test it with the following phrase:
+
+	**Hola amigo, como estas esta mañana**
+
+#### German Translator
+
+For German to English, we'll just make a copy of the **Spanish to English** copilot, 
+and replace *Spanish* with *German* in the prompt.
+
+1. On the Dashboard, click on **Manage Copilots** in the copilots box
+2. Click on **Add Copilot** on the top right
+3. Give your new copilot a name and a description of your choice, we recommend naming it *German Translator* so you can find it later.
+4. Click **Start** in the *Copy a Copilot* tile
+5. Select the *Spanish Translator* copilot, and click **Copy Copilot**
+6. Edit the new *German Translator* copilot, by selecting the *Edit* icon it its tile
+7. In the prompt, replace every occurence of *Spanish* with *German*:
+
+| Field | Input |
+| --- | --- |
+} Objective | Translate text from Spanish to English }
+| Greeting | Hi! What German text are we translating? |
+| Inputs | German text |
+
+8. Click **Show Advanced Settings** and select **GPT-4o** as the language model.
+9. Click **Save Prompt**
+10. Test your copilot by selecting the *Test Copilot* (left-most) icon on the tile for the copilot.
+
+*Wenn Sie Deutsch sprechen, geben Sie ein, was Sie möchten.* 
+If you don't speak German, you can test it with the following phrase:
+
+	**Hallo Freund, wie geht es dir diese morgen?**
+
+#### Language Identification Copilot
+	
+Now that we can translate, we next need to know what language we're translating, 
+so let's create a copilot that can identify the language of the input:
+
+1. On the Dashboard, click on **Manage Copilots** in the copilots box
+2. Click on **Add Copilot** on the top right
+3. Give your new copilot a name and a description of your choice, we recommend naming it *Language Identifier* so you can find it later.
+4. Click **Start** in the *Use a Template* tile
+5. Choose the **Q&A Template**
+6. Fill in the details below:
+
+| Field | Input |
+| --- | --- |
+| What will your Copilot do? | Determine the language of the input |
+| How will your Copilot greet users? | Please provide some text to identify |
+| What is your assistant's name? | Language Identifier |
+
+7. Click **Save**
+8. Edit the copilot you just created, by selecting the *Edit* icon it its tile.
+9. Fill in the following:
+
+| Field | Input |
+| --- | --- |
+| Audience | Language interpreters |
+| Personality | Terse |
+| Inputs | Text that is either German or Spanish |
+| Outputs | Identify the language of the input |
+
+10. In the *Explain what your Copilot will do and other rules you'd like it to follow* section, add the text from the **language id rules.txt** file
+11. Click **Save Prompt**
+11. Test your copilot by selecting the *Test Copilot* (left-most) icon on the tile for the copilot. Use the Spanish and English phrases from before when testing.
+
+#### Text Summarizer Copilot
+
+Finally, we'd like a summary of translated text, so let's create a copilot that summarizes text:
+
+1. On the Dashboard, click on **Manage Copilots** in the copilots box
+2. Click on **Add Copilot** on the top right
+3. Give your new copilot a name and a description of your choice, we recommend naming it *Text Summarizer* so you can find it later.
+4. Click **Start** in the *Use a Template* tile
+5. Choose the **Q&A Template**
+6. Fill in the details below:
+
+| Field | Input |
+| --- | --- |
+| What will your Copilot do? | Summarize the input text |
+| How will your Copilot greet users? | Please provide the text to summarize |
+| What is your assistant's name? | Language Summarizer |
+
+7. Click **Save**
+8. Edit the copilot you just created, by selecting the *Edit* icon it its tile.
+9. Fill in the following:
+
+| Field | Input |
+| --- | --- |
+| Audience | General Audience |
+| Personality | Professional |
+| Inputs | Text that is be summarized |
+| Outputs | A one paragraph summary of the input text |
+
+10. Click **Save Prompt**
+11. Test your copilot by selecting the *Test Copilot* (left-most) icon on the tile for the copilot.
+
+You can use the text in the **citizen kane.txt** file as input to the summarizer. 
+You should get a short plot summary for the movie *Citizen Kane* as the output.
+
+### Create the Translation Workflow
+Now we have all the components we need to build our translation system. Let's put them all together using a workflow.
+
+#### "Start Workflow" script
+First, we'll create a simple script to start the workflow. We'll cover scripting later, 
+for now we just need a simple one-line script to get the workflow started:
+
+1. In the navigation menu, select **Scripts**
+2. Click on **Add Script**
+3. Name the script **Start Workflow**
+4. Copy the following line into the script textbox
+
+	```
+	(prl *message*)
+	
+	```
+
+5. Click **Save**
+
+*(NOTE: In a future version of CopilotBuilder, this won't be necessary)*
+
+#### Workflow creation
+
+Now we're finally ready to put together our language translation service.
+
+1. In the navigation menu, select **Workflows**
+2. Click on **Create Workflow** in the upper-right. This brings up the workflow designer.
+3. Enter the following for the workflow details, or make up your own!
+
+| Field | Input |
+| --- | --- |
+| Workflow Title | Language Translator |
+| Workflow Description | Translates to English |
+| Greeting | Hello! What text are we translating? |
+| Assistant Name | Language Translator |
+
+4. Click **Choose an agent to start**
+5. In the *Choose Your Agent* popup, under *Scripts*, select **Start Workflow** script and click **Add Agent**
+
+First, we'll add a decision step that will use the *Language Identifier* copilot to determine the language of the input text:
+
+If the input text is SPANISH, we'll use the *Spanish Translator* copilot to translate it to english, 
+otherwise we'll use the *German Translator* copilot to translate it:
+
+Finally, we'll send the translated text to the *Text Summarizer* copilot:
+
+#### Test the workflow
+
 
 
 ## Scripting
@@ -165,7 +362,8 @@ Choose **GPT-4o** for the LLM
 
 7. Click **Save**
 8. Edit the copilot you just created
-9. In the *Explain what your Copilot will do and other rules you'd like it to follow* section, add the text from the "recipe copilot rules.txt" file
+9. In the *Explain what your Copilot will do and other rules you'd like it to follow* section, add the text from the **recipe copilot rules.txt** file
+10. Click **Save Prompt**
 
 ### Database query script
 
@@ -206,10 +404,13 @@ Now we'll put the script and the copilot together in a workflow.
 | Assistant Name | Meal Maker |
 
 4. Click **Choose an agent to start**
-5. In the *choose your agent* popup, under scripts, select **Get Ingredients** script and click **Add Agent**
+5. In the *Choose Your Agent* popup, under *Scripts*, select **Get Ingredients** script and click **Add Agent**
 6. On the workflow designer, in the **Get Ingredients** box, select *Add next agent* - the left-most icon
 7. In the *choose your agent* popup, under copilots, choose the **Recipe Maker** copilot and click **Add Agent**
 8. In *Workflow Details* click **Save workflow**
+
+### Test the Workflow
+
 
 
 ## Let the World Use Your Copilot
