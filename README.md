@@ -12,6 +12,7 @@ AI agents.
 - Compare LLMs
 - Use RAG
 - Search documents via data collections
+- Create workflows and scripts
 
 ## Register
 
@@ -129,6 +130,87 @@ You are a teacher at Columbus State who teaches a popular class about Star Wars.
 
 4. Test the copilot and send **Test.xlsx** as an attachment
 5. Instruct the copilot to grade the test and Yoda will grade the test for you
+
+## Workflows
+
+Often the best way to solve a problem is to break it up into smaller steps, each of which can be tackled by a copilot.
+These individual copilots can then be orchestrated by a **workflow** to work together to solve the bigger problem.
+
+
+## Scripting
+
+CopilotBuilder **scripts** allow us to modify data as they move between Copilots in a workflow.
+This allows us, for example, to insert data from (or send data to) external sources, 
+or to modify the output of an agent before it's passed on to the next one in the workflow.
+
+For this example, we will create a recipe copilot that will receive a list of available ingredients,
+obtained from a SQL database *via* a script, and will come up with a recipe based on those ingredients.
+
+### Recipe Maker Copilot
+
+1. On the Dashboard, click on **Manage Copilots** in the copilots box
+2. Click on **Add Copilot** on the top right
+3. Give your new copilot a name and a description, for example *recipe maker*
+4. Click on **Use a Template**
+5. Choose the **Q&A Template**
+6. Fill in the details below:
+
+| Field | Input |
+| --- | --- |
+| What will your Copilot do? | Create a recipe from a list of ingredients |
+| How will your Copilot greet users? | Hi! How may I help you? |
+| What is your assistant's name? | Recipe Maker |
+
+Choose **GPT-4o** for the LLM
+
+7. Click **Save**
+8. Edit the copilot you just created
+9. In the *Explain what your Copilot will do and other rules you'd like it to follow* section, add the text from the "recipe copilot rules.txt" file
+
+### Database query script
+
+We will define two scripts:
+- a helper script with code to connect to a SQL Server database
+- a query script that uses the helper script to execute a SQL query
+
+For the helper script:
+
+1. In the navigation menu, select **Scripts**
+2. Click on **Add Script**
+3. Name the script **SQL Helper**
+4. Copy the script from the "SQL Helper.lsp" file into the script textbox
+5. Click **Save**
+
+For the query script:
+
+1. In the navigation menu, select **Scripts**
+2. Click on **Add Script**
+3. Name the script **Get Ingredients**
+4. Copy the script from the "Get Ingredients.lsp" file into the script textbox
+5. Test the script by clicking **Test Script**, and note the script output 
+6. Click **Save**
+
+### Recipe workflow
+
+Now we'll put the script and the copilot together in a workflow.
+
+1. In the navigation menu, select **Workflows**
+2. Click on **Create Workflow** in the upper-right. This brings up the workflow designer.
+3. Enter the following for the workflow details, or make up your own!
+
+| Field | Input |
+| --- | --- |
+| Workflow Title | Meal Maker |
+| Workflow Description | Makes a meal |
+| Greeting | Hello! What meal are we making? |
+| Assistant Name | Meal Maker |
+
+4. Click **Choose an agent to start**
+5. In the *choose your agent* popup, under scripts, select **Get Ingredients** script and click **Add Agent**
+6. On the workflow designer, in the **Get Ingredients** box, select *Add next agent* - the left-most icon
+7. In the *choose your agent* popup, under copilots, choose the **Recipe Maker** copilot and click **Add Agent**
+8. In *Workflow Details* click **Save workflow**
+
 
 ## Let the World Use Your Copilot
 
