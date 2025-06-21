@@ -171,7 +171,8 @@ LLMs do not have).
 | Inputs | A location for the weather report |
 | Outputs | Weather information for the location |
 | Details | Use an API to get the current weather conditions for a location. Output the weather in a nice summary with emojis and styled text. |
-6. Back on the Copilot dashboard, click the **API Connections** button (a puzzle piece) for your new Copilot.
+
+6. 6. Back on the Copilot dashboard, click the **API Connections** button (a puzzle piece) for your new Copilot.
 7. Choose the API connection you previously created.
 8. Test your Copilot and ask for a location of your choice. You will get a live weather update.
 
@@ -222,9 +223,9 @@ Select **Gemini Flash** for the language model.
 | Outputs | The input translated to English |
 
 In the *Explain what your Copilot will do and other rules you'd like it to follow* section, add the following:
-	```
+	
 	Provide only the translation, and nothing else. Do not ask any follow-up questions.
-	```
+
 10. Click **Save Prompt**
 11. Test your copilot by selecting the *Test Copilot* (left-most) icon on the tile for the copilot.
 
@@ -306,11 +307,10 @@ for now we just need a simple one-line script to get the workflow started:
 1. In the navigation menu, select **Scripts**
 2. Click on **Add Script**
 3. Name the script **Start Workflow**
-4. Copy the following line into the script textbox
+4. Copy the following line into the script textbox:
 
 	```
-	(prl *message*)
-	
+	(prl *message*)	
 	```
 
 5. Click **Save**
