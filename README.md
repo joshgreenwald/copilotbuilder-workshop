@@ -217,42 +217,9 @@ If you don't speak German, you can test it with the following phrase:
 
 	**Hallo Freund, wie geht es dir diese morgen?**
 
-#### Language Identification Copilot
-	
-Now that we can translate, we next need to know what language we're translating, 
-so let's create a copilot that can identify the language of the input:
-
-1. On the Dashboard, click on **Manage Copilots** in the copilots box
-2. Click on **Add Copilot** on the top right
-3. Give your new copilot a name and a description of your choice, we recommend naming it *Language Identifier* so you can find it later.
-4. Click **Start** in the *Use a Template* tile
-5. Choose the **Q&A Template**
-6. Fill in the details below:
-
-| Field | Input |
-| --- | --- |
-| What will your Copilot do? | Determine the language of the input |
-| How will your Copilot greet users? | Please provide some text to identify |
-| What is your assistant's name? | Language Identifier |
-
-7. Click **Save**
-8. Edit the copilot you just created, by selecting the *Edit* icon it its tile.
-9. Fill in the following:
-
-| Field | Input |
-| --- | --- |
-| Audience | Language interpreters |
-| Personality | Terse |
-| Inputs | Text that is either German or Spanish |
-| Outputs | Identify the language of the input |
-
-10. In the *Explain what your Copilot will do and other rules you'd like it to follow* section, add the text from the **language id rules.txt** file
-11. Click **Save Prompt**
-11. Test your copilot by selecting the *Test Copilot* (left-most) icon on the tile for the copilot. Use the Spanish and English phrases from before when testing.
-
 #### Text Summarizer Copilot
 
-Finally, we'd like a summary of translated text, so let's create a copilot that summarizes text:
+We'd also like a summary of translated text, so let's create a copilot that summarizes text:
 
 1. On the Dashboard, click on **Manage Copilots** in the copilots box
 2. Click on **Add Copilot** on the top right
@@ -281,11 +248,12 @@ Finally, we'd like a summary of translated text, so let's create a copilot that 
 10. Click **Save Prompt**
 11. Test your copilot by selecting the *Test Copilot* (left-most) icon on the tile for the copilot.
 
-You can use the text in the **citizen kane.txt** file as input to the summarizer. 
+You can use the text in the **citizen kane.txt** (found in the Github **Data** folder) file as input to the summarizer. 
+**TIP:** Expand the input box to be multi-line so that you can see what you've copied into the input box.
 You should get a short plot summary for the movie *Citizen Kane* as the output.
 
 ### Create the Translation Workflow
-Now we have all the components we need to build our translation system. Let's put them all together using a workflow.
+Now we have all the components we need to build our translation system. Let's put them together using a workflow.
 
 #### "Start Workflow" script
 First, we'll create a simple script to start the workflow. We'll cover scripting later, 
@@ -316,22 +284,47 @@ Now we're finally ready to put together our language translation service.
 | Field | Input |
 | --- | --- |
 | Workflow Title | Language Translator |
-| Workflow Description | Translates to English |
+| Workflow Description | Translates text to English |
 | Greeting | Hello! What text are we translating? |
 | Assistant Name | Language Translator |
 
 4. Click **Choose an agent to start**
 5. In the *Choose Your Agent* popup, under *Scripts*, select **Start Workflow** script and click **Add Agent**
 
-First, we'll add a decision step that will use the *Language Identifier* copilot to determine the language of the input text:
+First, we'll add a decision step that will determine the language of the input text and use invoke the corresponding translator:
 
-If the input text is SPANISH, we'll use the *Spanish Translator* copilot to translate it to english, 
-otherwise we'll use the *German Translator* copilot to translate it:
+6. In the workflow designer, on the *Start Workflow* tile, click on the *Make a Decision* icon (second from the left)
+7. **Step 1: The Condition**
+we want to use either the German-English or Spanish-English translator, depending on the language in which the input is written,
+so our condition is:
 
-Finally, we'll send the translated text to the *Text Summarizer* copilot:
+	```
+	The input text is written in German.
+	```
+
+Enter this text as the condition, and click **Next ->**
+
+8. **Step 2: The "True" Path**
+If the condition we set is true, the input is written is German, so we want to use the German-English translator.
+Click on *Choose an Agent to Execute*
+9. Choose the *German Translator* Copilot, and click **Add Agent**
+
+10. **Step 3: The "False" Path**
+If the condition we set is false, we want to use the Spanish-English translator.
+11. Choose the *Spanish Translator* Copilot, and click **Add Agent**
+
+Next, we'll add the text summarizer to give us a summary of the translated text:
+
+12. In the workflow designer on the *Decision* tile click on the *Add Next Agent* (left-most) icon.
+13. Select the *Text Summarizer* Copilot and click **Add Agent**
+14. In the *Workflow Details* box, Click **Save Workflow**
 
 #### Test the workflow
 
+1. In the workflow tile for the *Language Translator* workflow, click the *Test Workflow* icon.
+2. You can find *spanish text.txt* and *german text.txt* files in the **Data** folder in Github.
+Use these to test the workflow.
+**TIP:** Expand the input box to be multi-line so that you can see what you've copied into the input box.
 
 
 ## Scripting
@@ -344,6 +337,8 @@ For this example, we will create a recipe copilot that will receive a list of av
 obtained from a SQL database *via* a script, and will come up with a recipe based on those ingredients.
 
 ### Recipe Maker Copilot
+
+We'll start with the recipe maker copilot:
 
 1. On the Dashboard, click on **Manage Copilots** in the copilots box
 2. Click on **Add Copilot** on the top right
@@ -362,21 +357,22 @@ Choose **GPT-4o** for the LLM
 
 7. Click **Save**
 8. Edit the copilot you just created
-9. In the *Explain what your Copilot will do and other rules you'd like it to follow* section, add the text from the **recipe copilot rules.txt** file
+9. In the *Explain what your Copilot will do and other rules you'd like it to follow* section, 
+add the text from the **recipe copilot rules.txt** file (found in the Github **Prompts** folder)
 10. Click **Save Prompt**
 
 ### Database query script
 
-We will define two scripts:
+Next, we will define two scripts:
 - a helper script with code to connect to a SQL Server database
-- a query script that uses the helper script to execute a SQL query
+- a query script that uses the helper script to execute a SQL query, and pass the results to the *Recipe Maker* copilot.
 
 For the helper script:
 
 1. In the navigation menu, select **Scripts**
 2. Click on **Add Script**
 3. Name the script **SQL Helper**
-4. Copy the script from the "SQL Helper.lsp" file into the script textbox
+4. Copy the script from the **SQL Helper.lsp** file (found in the Github **Scripts** folder) into the script textbox
 5. Click **Save**
 
 For the query script:
@@ -384,7 +380,7 @@ For the query script:
 1. In the navigation menu, select **Scripts**
 2. Click on **Add Script**
 3. Name the script **Get Ingredients**
-4. Copy the script from the "Get Ingredients.lsp" file into the script textbox
+4. Copy the script from the **Get Ingredients.lsp** file (found in the Github **Scripts** folder) into the script textbox
 5. Test the script by clicking **Test Script**, and note the script output 
 6. Click **Save**
 
@@ -411,6 +407,8 @@ Now we'll put the script and the copilot together in a workflow.
 
 ### Test the Workflow
 
+1. In the workflow tile for the *Meal Maker* workflow, click the *Test Workflow* icon.
+2. Ask it to make a meal (breakfast, lunch, dinner)
 
 
 ## Let the World Use Your Copilot

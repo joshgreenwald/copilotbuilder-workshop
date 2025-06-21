@@ -1,5 +1,0 @@
-
-Determine if the input  is written in German or Spanish. 
-The output should be the single word GERMAN if the input is written in German, or SPANISH if written in Spanish.  
-If you can't determine the language, the output should be UNKNOWN.  
-There should be no other output besides the words GERMAN, SPANISH or UNKNOWN.
