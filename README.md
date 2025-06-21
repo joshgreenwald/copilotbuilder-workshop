@@ -204,7 +204,7 @@ and replace *Spanish* with *German* in the prompt.
 
 | Field | Input |
 | --- | --- |
-} Objective | Translate text from Spanish to English }
+} Objective | Translate text from Spanish to English |
 | Greeting | Hi! What German text are we translating? |
 | Inputs | German text |
 
