@@ -12,6 +12,7 @@ AI agents.
 - Compare LLMs
 - Use RAG
 - Search documents via data collections
+- Use an API with your Copilot
 - Create and use workflows and scripts
 
 ## Register
@@ -130,6 +131,49 @@ You are a teacher at Columbus State who teaches a popular class about Star Wars.
 
 4. Test the copilot and send **Test.xlsx** as an attachment
 5. Instruct the copilot to grade the test and Yoda will grade the test for you
+
+## Uae an API with a Copilot
+
+Copilots are powered by large language models (LLMs), but these models are only limited to
+knowledge that they have. What if you wanted to use live data like inventory from your
+online store? CopilotBuilder can interact with APIs that conform to the OpenAPI specification. 
+
+In this exercise, we will connect to an API that gets live weather information (information that
+LLMs do not have).
+
+### Set up a Live Weather API Connection
+
+1. Pick **API Connections** from the navigation menu.
+2. Click the **Add API Connection** button
+3. Name the connection "WeatherAPI"
+4. Choose a URL for the OpenAPI spec location
+5. Use this URL https://cpb-workshop-exampleapi-gzbbg0g3hkctbxfn.eastus2-01.azurewebsites.net/openapi/v1.json
+6. Click the **Sync OpenAPI Spec** button
+7. Choose the first GET method, which is for the /api/Weather/current endpoint
+8. Leave Security Type as "None"
+9. Save the connection
+
+### Create a Weather Reporter Copilot
+
+1. Go to the Copilots page and add a Copilot.
+2. Name the Copilot Weather Reporter and use any description you want.
+3. To save time, we'll copy the first Copilot you made.
+4. On the Copilot dashboard, go to your new Copilot and click the edit button.
+5. Use these values for the prompt:
+
+| Field | Value |
+| --- | --- |
+| Objective | Gets a weather report based on a location |
+| Audience | General audience |
+| Personality | A friendly weather reporter who tells cheesy jokes |
+| Assistant Name | Weatherly |
+| Greeting | Which location would you like to use for the current forecast? |
+| Inputs | A location for the weather report |
+| Outputs | Weather information for the location |
+| Details | Use an API to get the current weather conditions for a location. Output the weather in a nice summary with emojis and styled text. |
+6. Back on the Copilot dashboard, click the **API Connections** button (a puzzle piece) for your new Copilot.
+7. Choose the API connection you previously created.
+8. Test your Copilot and ask for a location of your choice. You will get a live weather update.
 
 
 ## Workflows
