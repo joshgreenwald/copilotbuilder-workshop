@@ -163,12 +163,15 @@ Create an assistant that helps supervisors of a paint company troubleshoot and a
 | --- | --- |
 | Inputs| Weekly reports of machinery errors and production output |
 | Outputs | Calculate trends, if any, in the report |
-| Additional Rules | You are an assistant that analyzes a weekly report of a bottling machine at a paint company. Each report is for the same machine by the same operator. Trends we are interested in analyzing is user error vs. maintenance errors. As well as how those errors affect production. |
 
-7. Select "Save Prompt"
-8. From the "Copilots" page, go to your copilot and select the "Test Copilot" option
-9. In the test chat, upload the "WeeklyReport.pdf" from the "Excercise #2" folder 
-10. Once the upload is complete, ask the copilot to analyze the report.
+7. For "Explain what your Copilot will do and other rules you'd like it to follow:" input the following:
+
+	You are an assistant that analyzes a weekly report of a bottling machine at a paint company. Each report is for the same machine by the same operator. Trends we are interested in analyzing is user error vs. maintenance errors. As well as how those errors affect production.
+
+8. Select "Save Prompt"
+9. From the "Copilots" page, go to your copilot and select the "Test Copilot" option
+10. In the test chat, upload the "WeeklyReport.pdf" from the "Excercise #2" folder 
+11. Once the upload is complete, ask the copilot to analyze the report.
 
 
 ## Uae an API with a Copilot
@@ -211,7 +214,7 @@ LLMs do not have).
 | Outputs | Weather information for the location |
 | Details | Use an API to get the current weather conditions for a location. Output the weather in a nice summary with emojis and styled text. |
 
-6. 6. Back on the Copilot dashboard, click the **API Connections** button (a puzzle piece) for your new Copilot.
+6. Back on the Copilot dashboard, click the **API Connections** button (a puzzle piece) for your new Copilot.
 7. Choose the API connection you previously created.
 8. Test your Copilot and ask for a location of your choice. You will get a live weather update.
 
@@ -288,7 +291,7 @@ and replace *Spanish* with *German* in the prompt.
 
 | Field | Input |
 | --- | --- |
-} Objective | Translate text from Spanish to English |
+Objective | Translate text from Spanish to English |
 | Greeting | Hi! What German text are we translating? |
 | Inputs | German text |
 
