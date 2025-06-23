@@ -106,7 +106,7 @@ Copilots can use documents for reference. CopilotBuilder does this in two ways: 
 5. Click the checkbox next to the data collection you just created and save
 6. Test the copilot (you know the drill by now) and ask "What are pointers in C?". You should get an answer that cites the document in the data collection.
 
-## Exercise - Create an Automated Test Grading System
+## Exercise 1 - Create an Automated Test Grading System
 
 You are a teacher at Columbus State who teaches a popular class about Star Wars. You have 200 students and you want to speed up the grading process. You will make a copilot that will grade tests.
 
@@ -131,6 +131,45 @@ You are a teacher at Columbus State who teaches a popular class about Star Wars.
 
 4. Test the copilot and send **Test.xlsx** as an attachment
 5. Instruct the copilot to grade the test and Yoda will grade the test for you
+
+
+
+## Exercise 2 - Industrial Example
+
+Create an assistant that helps supervisors of a paint company troubleshoot and analyze trends of their bottling equiptment.
+
+**Plan:**
+- Create a data collection for the machine guide
+- Create a copilot for analyzing trends in production 
+- Accept a weekly report as the input
+
+1. Create a data collection and upload "BottlineMachineErrorCodes.pdf"
+2. Create a copilot using the Q&A template
+3. Input the following into the template:
+
+| Field | Value |
+| --- | --- |
+| What will your Copilot do? | Analyze weekly machine reports and find trends |
+| How will your Copilot greet users? | Please upload the weekly report |
+| What is your assistant's name? | You decide! |
+| LLM | Just leave the default |
+| Choose your data collections | Select the data collection you just created |
+
+4. Select "Save"
+5. Go to the "Copilots" page and go to edit the prompt of your new copilot
+6. Here we will update a few fields:
+
+| Field | Value |
+| --- | --- |
+| Inputs| Weekly reports of machinery errors and production output |
+| Outputs | Calculate trends, if any, in the report |
+| Additional Rules | You are an assistant that analyzes a weekly report of a bottling machine at a paint company. Each report is for the same machine by the same operator. Trends we are interested in analyzing is user error vs. maintenance errors. As well as how those errors affect production. |
+
+7. Select "Save Prompt"
+8. From the "Copilots" page, go to your copilot and select the "Test Copilot" option
+9. In the test chat, upload the "WeeklyReport.pdf" 
+10. Once the upload is complete, ask the copilot to analyze the report.
+
 
 ## Uae an API with a Copilot
 
