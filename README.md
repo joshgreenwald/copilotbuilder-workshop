@@ -136,14 +136,14 @@ You are a teacher at Columbus State who teaches a popular class about Star Wars.
 
 ## Exercise 2 - Industrial Example
 
-Create an assistant that helps supervisors of a paint company troubleshoot and analyze trends of their bottling equiptment.
+Create an assistant that helps supervisors of a paint company troubleshoot and analyze trends of their bottling equipment.
 
 **Plan:**
 - Create a data collection for the machine guide
 - Create a copilot for analyzing trends in production 
 - Accept a weekly report as the input
 
-1. Create a data collection and upload "BottlineMachineErrorCodes.pdf"
+1. Create a data collection and upload "BottlineMachineErrorCodes.pdf" from the "Excercise #2" folder
 2. Create a copilot using the Q&A template
 3. Input the following into the template:
 
@@ -167,7 +167,7 @@ Create an assistant that helps supervisors of a paint company troubleshoot and a
 
 7. Select "Save Prompt"
 8. From the "Copilots" page, go to your copilot and select the "Test Copilot" option
-9. In the test chat, upload the "WeeklyReport.pdf" 
+9. In the test chat, upload the "WeeklyReport.pdf" from the "Excercise #2" folder 
 10. Once the upload is complete, ask the copilot to analyze the report.
 
 
