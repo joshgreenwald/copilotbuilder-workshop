@@ -212,7 +212,7 @@ LLMs do not have).
 | Greeting | Which location would you like to use for the current forecast? |
 | Inputs | A location for the weather report |
 | Outputs | Weather information for the location |
-| Details | Use an API to get the current weather conditions for a location. Output the weather in a nice summary with emojis and styled text. |
+| Details | Output the weather in a nice summary with emojis and styled text. |
 
 6. Back on the Copilot dashboard, click the **API Connections** button (a puzzle piece) for your new Copilot.
 7. Choose the API connection you previously created.
@@ -230,6 +230,8 @@ Spanish into English. Our plan is to develop a system that can:
 - Identify the language of the text to be translated (either German or Spanish)
 - Based on this, do the translation to English
 - Provide an english summary of the translated text
+
+## Exercise - Translator Workflow
 
 ### Create copilots
 
@@ -412,6 +414,46 @@ Next, we'll add the text summarizer to give us a summary of the translated text:
 Use these to test the workflow.
 **TIP:** Expand the input box to be multi-line so that you can see what you've copied into the input box.
 
+## Exercise - Weather Report Workflow
+
+This workflow will send an email with a weather report and safety information if the temperature is ver a certain threshold. 
+
+### Create an email sender Copilot
+
+You should already have a Weather Reporter Copilot. Let's create an email sender.
+
+1. Create a new Copilot (you are a pro at this now, so either copy an existing one or use a template)
+2. Name is "Email Sender" with a description of your choice.
+3. Enter "sends emails" as the objective and pick GPT 4o mini as the model.
+4. The full details of the Copilot are:
+
+| Field | Value |
+| --- | --- |
+| Objective | Sends emails |
+| Audience | General audience |
+| Personality | Friendly and helpful |
+| Assistant Name | Sender |
+| Greeting | Provide the subject, recipient, and content of the email |
+| Inputs | Subject, recipient, and content of email|
+| Outputs | Success or failure message of sending email |
+
+### Create the workflow
+
+We only want to send an email when it's hot, so we're going to create a branching workflow.
+
+1. Create a new workflow and name it Weatherly
+2. Pick the Weather Report Copilot as the first agent
+3. Click the **branch** button at the bottom of the first agent
+4. For the condition enter: The temperature or heat index is greater than 80 degrees
+5. Click the "Show Advanced Settings" toggle
+6. Put this in the additional instructions field and use an email address of your choice: Send the email to josh.b.greenwald@gmail.com with subject "CopilotBuilder Weather Report". The content should be the report and safety instructions if necessary. 
+7. Click next
+8. Choose the Email Sender copilot for the **true path**
+9. Choose **Terminate Entire Workflow** for the **false path**
+10. Click **Save** to close the modal
+11. Click **Save Workflow** on the right to save the workflow
+
+Test your workflow and (assuming it's summertime when you do this), you should receive an email (or I should if you didn't change it).
 
 ## Scripting
 
